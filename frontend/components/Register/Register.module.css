@@ -1,0 +1,147 @@
+.registerWrapper {
+  margin: 0 auto;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  animation: shown 0.5s ease-in-out;
+}
+
+@keyframes shown {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.registerTitle {
+  font-size: 32px;
+  color: #78b043;
+  margin-bottom: 24px;
+  font-weight: 700;
+  animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+  0% {
+    transform: translatey(0px);
+  }
+  50% {
+    transform: translatey(-5px);
+  }
+  100% {
+    transform: translatey(0px);
+  }
+}
+.registerForm {
+  width: 400px;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #78b043;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0px 4px 8px rgba(120, 176, 67, 0.3);
+  margin-bottom: 24px;
+}
+.formLabel {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+.labelText {
+  font-size: 16px;
+  color: #374151;
+  font-weight: 500;
+}
+
+.lastLabel {
+  margin-bottom: 24px;
+}
+
+.inputField {
+  font-size: 16px;
+  color: #374151;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  width: 100%;
+  padding: 10px;
+  outline: transparent;
+  transition:
+    border-color 0.2s,
+    box-shadow 0.2s;
+
+  &:active,
+  &:focus-visible {
+    border-color: #78b043;
+    box-shadow: 0 1px 2px rgba(120, 176, 67, 0.2);
+  }
+}
+
+.passwordInput {
+  width: 100%;
+  padding: 10px;
+  margin-top: 4px;
+}
+
+.errorText {
+  color: crimson;
+  margin: 0;
+}
+.registerButton {
+  font-size: 16px;
+  color: #ffffff;
+  background-color: #78b043;
+  border-radius: 6px;
+  padding: 10px;
+  cursor: pointer;
+  border: 1px solid transparent;
+  outline: transparent;
+  transition:
+    background-color 0.3s ease-in-out,
+    box-shadow 0.3s ease-in-out,
+    color 0.3s ease-in-out,
+    border-color 0.3s ease-in-out;
+
+  &:active,
+  &:focus-visible {
+    background-color: #ffffff;
+    color: #78b043;
+    border: 1px solid #78b043;
+    box-shadow: 0 2px 4px rgba(120, 176, 67, 0.3);
+  }
+}
+
+.registerButton:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.loginLink {
+  font-size: 16px;
+  color: #78b043;
+  text-decoration: none;
+  font-weight: 500;
+  transition: text-decoration 0.3s;
+  outline: transparent;
+
+  &:active,
+  &:focus-visible {
+    text-decoration: underline;
+  }
+}
+
+@media (hover: hover) {
+  .registerButton:not(:disabled):hover {
+    background-color: #ffffff;
+    color: #78b043;
+    border: 1px solid #78b043;
+    box-shadow: 0 2px 4px rgba(120, 176, 67, 0.3);
+  }
+}
