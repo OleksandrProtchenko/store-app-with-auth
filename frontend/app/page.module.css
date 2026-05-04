@@ -1,4 +1,7 @@
 .container {
+  padding-top: 100px;
+}
+.wrapper {
   margin: 0 auto;
   width: 400px;
   min-height: 300px;
