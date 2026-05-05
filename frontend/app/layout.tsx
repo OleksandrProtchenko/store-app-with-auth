@@ -3,6 +3,7 @@ import "./globals.css";
 import "modern-normalize/modern-normalize.css";
 import "reset.css";
 import Header from "@/components/Header/Header";
+import TanStackProvider from "@/components/TanStackProvider/TanStackProvider";
 
 export const metadata: Metadata = {
   title: "Store App with Authentication",
@@ -18,10 +19,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <header className="header">
-          <Header />
-        </header>
-        <main className="main">{children}</main>
+        <TanStackProvider>
+          <header className="header">
+            <Header />
+          </header>
+          <main className="main">{children}</main>
+        </TanStackProvider>
       </body>
     </html>
   );

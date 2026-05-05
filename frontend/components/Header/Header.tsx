@@ -6,13 +6,23 @@ import Image from "next/image";
 import Clock from "../Clock/Clock";
 import { useAuthStore } from "@/lib/store/authStore";
 import Button from "../Button/Button";
+import api from "@/lib/api/api";
+import { usePathname, useRouter } from "next/navigation";
 
 export default function Header() {
-  const { logout } = useAuthStore();
-  const accessToken = useAuthStore((state) => state.accessToken);
+  const logout = useAuthStore((s) => s.logout);
+  const router = useRouter();
 
-  const handleLogout = () => {
-    logout();
+  const pathname = usePathname();
+  const isDashboard = pathname.startsWith("/dashboard");
+
+  const handleLogout = async () => {
+    try {
+      await api.post("/auth/logout");
+    } finally {
+      logout();
+      router.replace("/auth/login");
+    }
   };
 
   return (
@@ -36,7 +46,7 @@ export default function Header() {
           </div>
         </div>
       </div>
-      {accessToken && (
+      {isDashboard && (
         <Button onClick={handleLogout} className={css.btnLogout}>
           Logout
         </Button>

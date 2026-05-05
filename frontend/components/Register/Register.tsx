@@ -4,19 +4,18 @@ import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import css from "./Register.module.css";
 import { useRouter } from "next/navigation";
-import axios from "axios";
+import { useRegister } from "@/lib/api/mutation";
 
 export default function Register() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState("");
 
   const inputNameRef = useRef<HTMLInputElement>(null);
 
   const router = useRouter();
+  const { mutate, isPending, error } = useRegister();
 
   useEffect(() => {
     inputNameRef.current?.focus();
@@ -26,11 +25,10 @@ export default function Register() {
     e.preventDefault();
 
     if (password !== confirmPassword) {
-      setError("Пароли не совпадают.");
+      console.log({ message: "Пароли не совпадают." });
       return;
     }
-
-    setIsLoading(true);
+    mutate({ name, email, password });
   };
 
   return (
@@ -87,14 +85,14 @@ export default function Register() {
           />
         </label>
 
-        {error ? <p className={css.errorText}>{error}</p> : null}
+        {error ? <p className={css.errorText}>{error.message}</p> : null}
 
         <button
           className={css.registerButton}
           type="submit"
-          disabled={isLoading}
+          disabled={isPending}
         >
-          {isLoading ? "Loading..." : "Register"}
+          {isPending ? "Loading..." : "Register"}
         </button>
       </form>
 

@@ -6,16 +6,16 @@ import css from "./Login.module.css";
 
 import { useRouter } from "next/navigation";
 import axios from "axios";
+import { useLogin } from "@/lib/api/mutation";
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState("");
 
   const inputEmailRef = useRef<HTMLInputElement>(null);
 
   const router = useRouter();
+  const { mutate, isPending, error } = useLogin();
 
   useEffect(() => {
     inputEmailRef.current?.focus();
@@ -23,8 +23,7 @@ export default function Login() {
 
   const handleSubmit = async (e: React.SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setError("");
-    setIsLoading(true);
+    mutate({ email, password });
   };
 
   return (
@@ -56,10 +55,10 @@ export default function Login() {
           />
         </label>
 
-        {error ? <p className={css.errorText}>{error}</p> : null}
+        {error ? <p className={css.errorText}>{error.message}</p> : null}
 
-        <button className={css.loginButton} type="submit" disabled={isLoading}>
-          {isLoading ? "Loading..." : "Login"}
+        <button className={css.loginButton} type="submit" disabled={isPending}>
+          {isPending ? "Loading..." : "Login"}
         </button>
       </form>
 
