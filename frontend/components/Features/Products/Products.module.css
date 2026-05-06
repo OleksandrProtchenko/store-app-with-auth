@@ -1,0 +1,197 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  height: 100%;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+
+.title {
+  margin: 0;
+  font-size: 20px;
+  color: #2e3f4c;
+}
+
+.addButton {
+  padding: 8px 14px;
+  border: 1px solid #85b96b;
+  border-radius: 8px;
+  background: #f6fff1;
+  color: #2e5e19;
+  cursor: pointer;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.empty {
+  color: #8a9aa6;
+  padding: 20px 0;
+}
+
+.list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: #fff;
+  border: 1px solid #e3e8ea;
+  border-radius: 8px;
+  padding: 12px 14px;
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #8fc34f;
+  flex-shrink: 0;
+}
+
+.info {
+  flex: 1;
+  min-width: 0;
+}
+
+.productTitle {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 600;
+  color: #2e3f4c;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.sub {
+  margin: 2px 0 0;
+  font-size: 13px;
+  color: #8a9aa6;
+}
+
+.type {
+  font-size: 13px;
+  color: #627683;
+  white-space: nowrap;
+}
+
+.guarantee {
+  display: flex;
+  flex-direction: column;
+  font-size: 12px;
+  color: #627683;
+  white-space: nowrap;
+}
+
+.guaranteeLabel {
+  font-weight: 600;
+  color: #3a5160;
+}
+
+.prices {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 2px;
+  white-space: nowrap;
+}
+
+.price {
+  font-size: 13px;
+  color: #8a9aa6;
+}
+
+.priceDefault {
+  font-size: 15px;
+  font-weight: 700;
+  color: #2e5e19;
+}
+
+.deleteButton {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 18px;
+  color: #b04040;
+  padding: 4px;
+  flex-shrink: 0;
+}
+.headerRight {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.selectWrap {
+  position: relative;
+  min-width: 180px;
+}
+
+.selectButton {
+  width: 100%;
+  height: 40px;
+  border: 1px solid #cfd9df;
+  border-radius: 10px;
+  background: #fff;
+  color: #2e3f4c;
+  font-weight: 600;
+  padding: 0 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+}
+
+.selectArrow {
+  color: #7f919e;
+  font-size: 14px;
+}
+
+.selectMenu {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  right: 0;
+  background: #fff;
+  border: 1px solid #d9e3e8;
+  border-radius: 10px;
+  padding: 6px;
+  margin: 0;
+  list-style: none;
+  box-shadow: 0 10px 26px rgba(0, 0, 0, 0.1);
+  z-index: 20;
+}
+
+.selectOption {
+  width: 100%;
+  border: none;
+  background: transparent;
+  text-align: left;
+  padding: 8px 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  color: #2e3f4c;
+}
+
+.selectOption:hover {
+  background: #f2f8ef;
+}
+
+.orderName {
+  margin: 4px 0 0;
+  font-size: 12px;
+  color: #6b7f8c;
+}

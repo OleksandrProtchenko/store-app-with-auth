@@ -1,3 +1,29 @@
-export default function ProductsPage() {
-  return <div>Products Page</div>;
+import {
+  dehydrate,
+  HydrationBoundary,
+  QueryClient,
+} from "@tanstack/react-query";
+import { cookies } from "next/headers";
+import Products from "@/components/Features/Products/Products";
+import { getOrdersServer } from "@/lib/api/server/apiServerOrders";
+
+export default async function ProductsPage() {
+  const cookieStore = await cookies();
+  const cookieHeader = cookieStore
+    .getAll()
+    .map((c) => `${c.name}=${c.value}`)
+    .join("; ");
+
+  const queryClient = new QueryClient();
+
+  await queryClient.prefetchQuery({
+    queryKey: ["orders"],
+    queryFn: () => getOrdersServer(cookieHeader),
+  });
+
+  return (
+    <HydrationBoundary state={dehydrate(queryClient)}>
+      <Products />
+    </HydrationBoundary>
+  );
 }

@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import "modern-normalize/modern-normalize.css";
 import "reset.css";
-import Header from "@/components/Header/Header";
+import Header from "@/components/Layout/Header/Header";
 import TanStackProvider from "@/components/TanStackProvider/TanStackProvider";
 
 export const metadata: Metadata = {

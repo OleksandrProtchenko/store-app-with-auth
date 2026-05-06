@@ -1,6 +1,6 @@
 "use client";
 
-import { getMe } from "@/lib/api/apiClient";
+import { getMe } from "@/lib/api/client/apiAuth";
 import SidebarPage from "./@sidebar/default";
 import css from "./layout.module.css";
 import { useAuthStore } from "@/lib/store/authStore";

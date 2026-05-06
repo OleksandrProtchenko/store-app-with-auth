@@ -1,0 +1,134 @@
+.wrapper {
+  display: grid;
+  gap: 16px;
+}
+
+.headerRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.title {
+  margin: 0;
+  font-size: 24px;
+}
+
+.addButton {
+  padding: 10px 14px;
+  border: 1px solid #85b96b;
+  border-radius: 8px;
+  background: #f6fff1;
+  color: #2e5e19;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 12px;
+}
+
+.card {
+  border: 1px solid #e3e8ea;
+  border-radius: 10px;
+  padding: 14px;
+  background: #fff;
+}
+
+.cardTop {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}
+
+.orderTitle {
+  margin: 0;
+  font-size: 18px;
+}
+
+.badge {
+  font-size: 12px;
+  padding: 4px 8px;
+  background: #eef6ff;
+  border: 1px solid #c9def8;
+  border-radius: 999px;
+}
+
+.description {
+  margin: 10px 0;
+  color: #45535c;
+}
+
+.meta {
+  margin: 0;
+  color: #6b7a84;
+  font-size: 13px;
+}
+
+.actions {
+  margin-top: 12px;
+  display: flex;
+  gap: 8px;
+}
+
+.editButton {
+  padding: 8px 12px;
+  border: 1px solid #8ab5dd;
+  border-radius: 8px;
+  background: #f3f9ff;
+  color: #1f4c78;
+  cursor: pointer;
+}
+
+.deleteButton {
+  padding: 8px 12px;
+  border: 1px solid #d77878;
+  border-radius: 8px;
+  background: #fff4f4;
+  color: #8e1f1f;
+  cursor: pointer;
+}
+
+.stateText {
+  color: #60707b;
+}
+
+.form {
+  display: grid;
+  gap: 12px;
+}
+
+.label {
+  display: grid;
+  gap: 6px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.input,
+.textarea {
+  width: 100%;
+  border: 1px solid #d5dde1;
+  border-radius: 8px;
+  padding: 10px;
+  font: inherit;
+}
+
+.textarea {
+  min-height: 90px;
+  resize: vertical;
+}
+.viewButton {
+  padding: 8px 12px;
+  border: 1px solid #85b96b;
+  border-radius: 8px;
+  background: #f6fff1;
+  color: #2e5e19;
+  cursor: pointer;
+}

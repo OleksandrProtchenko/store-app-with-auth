@@ -1,0 +1,80 @@
+.layout {
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  gap: 0;
+  height: 100%;
+  border: 1px solid #e3e8ea;
+  border-radius: 10px;
+  overflow: hidden;
+  background: #f3f6f8;
+}
+
+.orderList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border-right: 1px solid #e3e8ea;
+  overflow-y: auto;
+}
+
+.orderItem {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 16px;
+  cursor: pointer;
+  border-bottom: 1px solid #edf0f2;
+  background: #fff;
+  position: relative;
+  transition: background 0.15s;
+}
+
+.orderItem:hover {
+  background: #f0f8ec;
+}
+
+.orderItem.active {
+  background: #e8f5df;
+}
+
+.orderIcon {
+  font-size: 20px;
+  color: #8a9aa6;
+}
+
+.orderInfo {
+  flex: 1;
+  min-width: 0;
+}
+
+.orderCount {
+  margin: 0;
+  font-size: 22px;
+  font-weight: 700;
+  color: #2e3f4c;
+  line-height: 1;
+}
+
+.orderCount span {
+  font-size: 13px;
+  font-weight: 400;
+  color: #8a9aa6;
+  margin-left: 4px;
+}
+
+.orderDate {
+  margin: 4px 0 0;
+  font-size: 13px;
+  color: #627683;
+}
+
+.arrow {
+  font-size: 24px;
+  color: #8a9aa6;
+}
+
+.productsPanel {
+  padding: 20px;
+  overflow-y: auto;
+  background: #fff;
+}
