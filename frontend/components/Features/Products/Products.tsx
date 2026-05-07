@@ -12,6 +12,8 @@ import DeleteConfirmModal from "../../UI/DeleteConfirmModal/DeleteConfirmModal";
 import Button from "../../UI/Button/Button";
 import { queryKeys } from "@/types/queryKeys";
 import { formatDateLong, formatDateShort } from "@/utils/formatDate";
+import { IoMdArrowDropdown } from "react-icons/io";
+import { MdOutlineDeleteForever } from "react-icons/md";
 
 interface ProductsProps {
   order?: Order;
@@ -96,36 +98,44 @@ export default function Products({ order }: ProductsProps) {
   const pageTitle = isOrderMode ? (order?.title ?? "Products") : "All Products";
 
   return (
-    <div className={css.wrapper}>
-      <div className={css.header}>
-        <h3 className={css.title}>{pageTitle}</h3>
+    <div className={css.productsWrapper}>
+      <div className={css.productsHeader}>
+        <h3 className={css.productsHeaderTitle}>{pageTitle}</h3>
 
-        <div className={css.headerRight}>
+        <div className={css.productsHeaderFilters}>
           {!isOrderMode ? (
-            <div className={css.selectWrap} ref={selectRef}>
-              <button
+            <div className={css.filtersWrapper} ref={selectRef}>
+              <Button
                 type="button"
-                className={css.selectButton}
+                className={css.selectFilterButton}
                 onClick={() => setIsSelectOpen((prev) => !prev)}
               >
                 {selectedType === "all" ? "All types" : selectedType}
-                <span className={css.selectArrow}>▾</span>
-              </button>
+                <span>
+                  <IoMdArrowDropdown
+                    className={
+                      !isSelectOpen
+                        ? css.selectArrow
+                        : `${css.selectArrow} ${css.selectArrowOpen}`
+                    }
+                  />
+                </span>
+              </Button>
 
               {isSelectOpen ? (
-                <ul className={css.selectMenu}>
+                <ul className={css.selectFiltersList}>
                   {types.map((type) => (
-                    <li key={type}>
-                      <button
+                    <li key={type} className={css.selectFiltersItem}>
+                      <Button
                         type="button"
-                        className={css.selectOption}
+                        className={css.filtersItemType}
                         onClick={() => {
                           setSelectedType(type);
                           setIsSelectOpen(false);
                         }}
                       >
                         {type === "all" ? "All types" : type}
-                      </button>
+                      </Button>
                     </li>
                   ))}
                 </ul>
@@ -136,7 +146,7 @@ export default function Products({ order }: ProductsProps) {
           {isOrderMode && order?._id ? (
             <Button
               onClick={() => setIsAddOpen(true)}
-              className={css.addButton}
+              className={css.addProductButton}
             >
               + Add Product
             </Button>
@@ -145,56 +155,54 @@ export default function Products({ order }: ProductsProps) {
       </div>
 
       {filteredProducts.length === 0 ? (
-        <p className={css.empty}>Products not found</p>
+        <p className={css.emptyProductsText}>Products not found</p>
       ) : (
-        <ul className={css.list}>
+        <ul className={css.productsList}>
           {filteredProducts.map((product) => (
-            <li key={product._id} className={css.card}>
-              <div className={css.dot} />
+            <li key={product._id} className={css.productItem}>
+              <div className={css.productTitleWrapper}>
+                <div className={css.productTitleInfo}>
+                  <p className={css.productTitle}>{product.title}</p>
+                  {!isOrderMode ? (
+                    <p className={css.productOrderName}>
+                      Order: {product.orderTitle}
+                    </p>
+                  ) : null}
+                </div>
 
-              <div className={css.info}>
-                <p className={css.productTitle}>{product.title}</p>
-                <p className={css.sub}>SN-{product.serialNumber}</p>
-                {!isOrderMode ? (
-                  <p className={css.orderName}>Order: {product.orderTitle}</p>
-                ) : null}
+                <div className={css.productType}>Type: {product.type}</div>
               </div>
 
-              <div className={css.type}>{product.type}</div>
+              <div className={css.productDetailsWrapper}>
+                <div className={css.productGuarantee}>
+                  <div className={css.productGuaranteeDates}>
+                    <span>{formatDateShort(product.guarantee.start)}</span>
+                    <span>{formatDateShort(product.guarantee.end)}</span>
+                  </div>
+                </div>
 
-              <div className={css.guarantee}>
-                <span className={css.guaranteeLabel}>Guarantee:</span>
-                <span>
-                  {formatDateShort(product.guarantee.start)} /{" "}
-                  {formatDateLong(product.guarantee.start)}
-                </span>
-                <span>
-                  {formatDateShort(product.guarantee.end)} /{" "}
-                  {formatDateLong(product.guarantee.end)}
-                </span>
+                <div className={css.productPrices}>
+                  {product.price.map((p, i) => (
+                    <span
+                      key={i}
+                      className={
+                        p.isDefault
+                          ? `${css.productItemTotalUSD} ${css.productItemTotalUSD}`
+                          : css.productItemTotalUAH
+                      }
+                    >
+                      {p.value} {p.symbol}
+                    </span>
+                  ))}
+                </div>
+
+                <Button
+                  onClick={() => setDeletingProduct({ product })}
+                  className={css.productDeleteButton}
+                >
+                  <MdOutlineDeleteForever className={css.productDeleteIcons} />
+                </Button>
               </div>
-
-              <div className={css.prices}>
-                {product.price.map((p, i) => (
-                  <span
-                    key={i}
-                    className={
-                      p.isDefault
-                        ? `${css.price} ${css.priceDefault}`
-                        : css.price
-                    }
-                  >
-                    {p.value} {p.symbol}
-                  </span>
-                ))}
-              </div>
-
-              <Button
-                onClick={() => setDeletingProduct({ product })}
-                className={css.deleteButton}
-              >
-                🗑
-              </Button>
             </li>
           ))}
         </ul>

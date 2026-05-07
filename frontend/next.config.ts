@@ -9,6 +9,7 @@ const nextConfig: NextConfig = {
   //     static: 180,
   //   },
   // },
+  output: "standalone",
 };
 
 export default nextConfig;

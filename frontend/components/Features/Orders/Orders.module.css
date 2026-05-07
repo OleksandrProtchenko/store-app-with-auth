@@ -1,6 +1,11 @@
 .ordersWrapper {
   width: 100%;
+  height: 100%;
   max-height: 100%;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  overflow: hidden;
 }
 .ordersHeader {
   padding: 20px;
@@ -51,9 +56,14 @@
 
 .ordersList {
   padding: 20px;
+  margin: 0;
+  list-style: none;
   display: flex;
   flex-direction: column;
   gap: 20px;
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
 }
 
 .ordersItem {
@@ -236,5 +246,43 @@
   }
   100% {
     transform: translatey(0px);
+  }
+}
+
+/* Modal */
+
+.wrapperEditModal {
+  min-height: 300px;
+  border: 1px solid #edf0f2;
+  padding: 20px;
+  border-radius: 10px;
+
+  .labelEditModal {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 8px;
+
+    .labelText {
+      margin-bottom: 8px;
+      font-weight: 600;
+      text-shadow: 0px 1px 2px #374151;
+    }
+
+    .inputEditTitle,
+    .inputEditDescription {
+      outline: transparent;
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      font-size: 14px;
+      resize: vertical;
+    }
+    .inputEditDescription {
+      outline: transparent;
+      height: 200px;
+      resize: none;
+    }
   }
 }

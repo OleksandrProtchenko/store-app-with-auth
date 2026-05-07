@@ -10,109 +10,83 @@
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
-  width: min(760px, calc(100vw - 32px));
+  width: min(400px, calc(100vw - 32px));
   border-radius: 10px;
   background: #f3f6f8;
   z-index: 1000;
   overflow: hidden;
   box-shadow: 0 24px 56px rgba(0, 0, 0, 0.22);
+  padding: 50px 20px 20px;
 }
 
 .closeBtn {
   position: absolute;
-  right: 14px;
-  top: 14px;
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
-  border: 0;
-  background: #fff;
-  color: #8a9aa6;
-  font-size: 20px;
-  cursor: pointer;
-}
-
-.head {
-  padding: 28px 32px 22px;
-  font-size: 38px;
-  line-height: 1.08;
-  font-weight: 700;
-  color: #2e3f4c;
-}
-
-.preview {
+  top: 10px;
+  right: 10px;
   display: flex;
+  justify-content: center;
   align-items: center;
-  gap: 14px;
-  background: #fff;
-  padding: 16px 32px;
-  border-top: 1px solid #e4ebef;
-  border-bottom: 1px solid #e4ebef;
-}
-
-.dot {
-  width: 10px;
-  height: 10px;
+  width: 32px;
+  height: 32px;
   border-radius: 50%;
-  background-color: #8fc34f;
+  border: 1px solid #78b043;
+  color: #78b043;
+  font-size: 18px;
+  cursor: pointer;
+  background-color: #fff;
+  transition: background-color 0.3s ease;
+
+  @media (hover: hover) {
+    &:hover {
+      background-color: #78b043;
+    }
+  }
 }
 
-.info {
-  min-width: 0;
+.modalTitle {
+  font-size: 18px;
+  font-weight: 500;
+  text-align: center;
+  margin-bottom: 20px;
+  color: #78b043;
+  text-shadow: 0px 1px 2px #78b043;
 }
 
-.title {
-  margin: 0;
-  font-size: 24px;
-  line-height: 1.1;
-  color: #334856;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.subtitle {
-  margin: 6px 0 0;
-  color: #627683;
-  font-size: 16px;
-}
-
-.meta {
-  margin: 6px 0 0;
-  color: #8ea3b1;
-  font-size: 14px;
-}
-
-.footer {
+.modalFooter {
   display: flex;
-  justify-content: flex-end;
-  gap: 16px;
-  padding: 28px 32px;
-  background: #86bd4b;
+  justify-content: center;
+  gap: 30px;
 }
-
 .cancelBtn,
 .deleteBtn {
-  height: 52px;
-  min-width: 170px;
-  border-radius: 28px;
-  border: 0;
-  font-weight: 700;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
+  background-color: transparent;
+  border: 1px solid #78b043;
+  color: #78b043;
+  text-shadow: 0px 1px 2px #78b043;
+  padding: 5px 10px;
+  border-radius: 4px;
   cursor: pointer;
+  box-shadow:
+    0 3px 6px rgba(120, 176, 67, 0.2),
+    0 2px 4px rgba(120, 176, 67, 0.1);
+  transition:
+    background-color 0.3s,
+    color 0.3s,
+    text-shadow 0.3s,
+    box-shadow 0.3s;
 }
 
-.cancelBtn {
-  background: transparent;
-  color: #ffffff;
+@media (hover: hover) {
+  .cancelBtn:hover,
+  .deleteBtn:hover {
+    background-color: #78b043;
+    text-shadow: 0px 1px 2px #fff;
+    color: #fff;
+    box-shadow:
+      0 4px 6px rgba(120, 176, 67, 0.3),
+      0 2px 4px rgba(120, 176, 67, 0.2);
+  }
 }
-
-.deleteBtn {
-  background: #fff;
-  color: #ea4f5d;
-}
-
 .cancelBtn:disabled,
 .deleteBtn:disabled {
   opacity: 0.7;

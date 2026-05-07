@@ -9,6 +9,10 @@
   background: #f3f6f8;
 }
 
+.layoutClosed {
+  grid-template-columns: 240px 0;
+}
+
 .orderList {
   list-style: none;
   margin: 0;
@@ -75,6 +79,65 @@
 
 .productsPanel {
   padding: 20px;
-  overflow-y: auto;
   background: #fff;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  position: relative;
+
+  .closePanelButton {
+    cursor: pointer;
+    width: 30px;
+    padding: 5px;
+    font-size: 18px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 15px;
+    border: 1px solid #78b043;
+    background-color: #fff;
+    color: #78b043;
+    transition:
+      background-color 0.3s,
+      border-color 0.3s,
+      color 0.3s,
+      box-shadow 0.3s;
+  }
+
+  @media (hover: hover) {
+    .closePanelButton:hover {
+      background-color: #78b043;
+      border-color: #78b043;
+      color: #fff;
+      box-shadow:
+        0 3px 6px rgba(120, 176, 67, 0.2),
+        0 2px 4px rgba(120, 176, 67, 0.1);
+
+      & .modalCloseBtnIcons {
+        color: #fff;
+      }
+    }
+  }
+}
+
+.selectOrderText {
+  padding-top: 30px;
+  text-align: center;
+  color: #78b043;
+  text-shadow: 0px 1px 2px #78b043;
+  animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+  0% {
+    transform: translatey(0px);
+  }
+  50% {
+    transform: translatey(-5px);
+  }
+  100% {
+    transform: translatey(0px);
+  }
 }

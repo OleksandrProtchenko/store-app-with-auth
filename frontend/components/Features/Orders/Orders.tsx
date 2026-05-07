@@ -196,21 +196,21 @@ export default function Orders() {
         confirmText={isUpdating ? "Saving..." : "Save"}
         isLoading={isUpdating}
       >
-        <div className={css.form}>
-          <label className={css.label}>
-            Title
+        <div className={css.wrapperEditModal}>
+          <label className={css.labelEditModal}>
+            <span className={css.labelText}>Title</span>
             <input
-              className={css.input}
+              className={css.inputEditTitle}
               value={title}
               onChange={(e) => setTitle(e.target.value)}
               placeholder="Order title"
             />
           </label>
 
-          <label className={css.label}>
-            Description
+          <label className={css.labelEditModal}>
+            <span className={css.labelText}>Description</span>
             <textarea
-              className={css.textarea}
+              className={css.inputEditDescription}
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               placeholder="Order description"

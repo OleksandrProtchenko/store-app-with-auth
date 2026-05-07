@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import css from "./DeleteConfirmModal.module.css";
+import { IoCloseOutline } from "react-icons/io5";
 
 type EntityType = "order" | "product";
 
@@ -49,37 +50,28 @@ export default function DeleteConfirmModal({
 
   if (!mounted || !isOpen) return null;
 
-  const label = entityType === "order" ? "ордер" : "продукт";
+  const label = entityType === "order" ? "order" : "product";
 
   return createPortal(
     <>
       <div className={css.overlay} onClick={onClose} />
       <div className={css.modal} role="dialog" aria-modal="true">
         <button className={css.closeBtn} type="button" onClick={onClose}>
-          x
+          <IoCloseOutline className={css.modalCloseBtnIcons} />
         </button>
 
-        <div className={css.head}>
-          Вы уверены, что хотите удалить этот {label}?
+        <div className={css.modalTitle}>
+          Are you sure you want to delete this {label}: {title}?
         </div>
 
-        <div className={css.preview}>
-          <div className={css.dot} />
-          <div className={css.info}>
-            <p className={css.title}>{title}</p>
-            {subtitle ? <p className={css.subtitle}>{subtitle}</p> : null}
-            {meta ? <p className={css.meta}>{meta}</p> : null}
-          </div>
-        </div>
-
-        <div className={css.footer}>
+        <div className={css.modalFooter}>
           <button
             className={css.cancelBtn}
             type="button"
             onClick={onClose}
             disabled={isLoading}
           >
-            Отменить
+            Cancel
           </button>
           <button
             className={css.deleteBtn}
@@ -87,7 +79,7 @@ export default function DeleteConfirmModal({
             onClick={onConfirm}
             disabled={isLoading}
           >
-            {isLoading ? "Удаление..." : "Удалить"}
+            {isLoading ? "Deleting..." : "Delete"}
           </button>
         </div>
       </div>
