@@ -14,6 +14,10 @@ const nextConfig: NextConfig = {
         source: "/api/orders/:path*",
         destination: `${process.env.BACKEND_URL}/orders/:path*`,
       },
+      {
+        source: "/api/nbu/:path*",
+        destination: "https://bank.gov.ua/NBUStatService/v1/statdataxml/:path*",
+      },
     ];
   },
 };
