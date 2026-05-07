@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { useSearchParams } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { getOrders } from "@/lib/api/client/apiOrders";
 import { Order } from "@/types";
 import Products from "../Products/Products";
@@ -12,6 +12,8 @@ import { queryKeys } from "@/types/queryKeys";
 export default function Groups() {
   const searchParams = useSearchParams();
   const initialOrderId = searchParams.get("orderId");
+  const router = useRouter();
+  const pathname = usePathname();
 
   const [selectedOrder, setSelectedOrder] = useState<Order | null>(null);
 
@@ -33,7 +35,14 @@ export default function Groups() {
       }
     }
 
-    setSelectedOrder(orders[0]);
+    const firstOrder = orders[0];
+    setSelectedOrder(firstOrder);
+
+    if (firstOrder._id && searchParams.get("orderId") !== firstOrder._id) {
+      const params = new URLSearchParams(searchParams.toString());
+      params.set("orderId", firstOrder._id);
+      router.replace(pathname + "?" + params.toString(), { scroll: false });
+    }
   }, [orders, initialOrderId]);
 
   useEffect(() => {
@@ -41,6 +50,20 @@ export default function Groups() {
     const updated = orders.find((o) => o._id === selectedOrder._id);
     if (updated) setSelectedOrder(updated);
   }, [data]);
+
+  const handleSelectOrder = (order: Order) => {
+    if (!order?._id) return;
+
+    const currentOrderId = searchParams.get("orderId");
+    if (currentOrderId !== order._id) {
+      const params = new URLSearchParams(searchParams.toString());
+      params.set("orderId", order._id);
+      router.replace(pathname + "?" + params.toString(), { scroll: false });
+    }
+
+    if (selectedOrder?._id === order._id) return;
+    setSelectedOrder(order);
+  };
 
   if (isLoading) return <p>Loading...</p>;
 
@@ -53,7 +76,7 @@ export default function Groups() {
             <li
               key={order._id}
               className={`${css.orderItem} ${isActive ? css.active : ""}`}
-              onClick={() => setSelectedOrder(order)}
+              onClick={() => handleSelectOrder(order)}
             >
               <div className={css.orderIcon}>☰</div>
               <div className={css.orderInfo}>
@@ -62,8 +85,8 @@ export default function Groups() {
                   <span> Products</span>
                 </p>
                 <p className={css.orderDate}>
-                  {order.date
-                    ? new Date(order.date).toLocaleDateString("uk-UA")
+                  {order.createdAt
+                    ? new Date(order.createdAt).toLocaleDateString("uk-UA")
                     : "-"}
                 </p>
               </div>

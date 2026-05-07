@@ -16,18 +16,12 @@ export default async function proxy(request: NextRequest) {
     if (accessToken) return NextResponse.next();
 
     if (!refreshToken) {
-      const res = NextResponse.redirect(new URL("/auth/login", request.url));
-      res.cookies.delete("accessToken");
-      res.cookies.delete("refreshToken");
-      return res;
+      return NextResponse.redirect(new URL("/auth/login", request.url));
     }
 
     const refreshed = await tryRefresh(request);
     if (!refreshed.ok) {
-      const res = NextResponse.redirect(new URL("/auth/login", request.url));
-      res.cookies.delete("accessToken");
-      res.cookies.delete("refreshToken");
-      return res;
+      return NextResponse.redirect(new URL("/auth/login", request.url));
     }
 
     return applySetCookies(NextResponse.next(), refreshed.setCookies);

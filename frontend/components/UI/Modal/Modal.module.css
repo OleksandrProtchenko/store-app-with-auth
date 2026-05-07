@@ -1,4 +1,4 @@
-.overlay {
+/* .overlay {
   position: fixed;
   inset: 0;
   background: rgba(34, 52, 66, 0.55);
@@ -117,4 +117,127 @@
 .deleteBtn:disabled {
   opacity: 0.7;
   cursor: not-allowed;
+}
+ */
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(34, 52, 66, 0.55);
+  z-index: 999;
+}
+
+.modal {
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: min(760px, calc(100vw - 32px));
+  min-height: 300px;
+  border-radius: 10px;
+  background: #fff;
+  z-index: 1000;
+  overflow: hidden;
+  box-shadow: 0 24px 56px rgba(0, 0, 0, 0.22);
+  display: flex;
+  flex-direction: column;
+
+  .modalHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 28px 32px 22px;
+
+    .modalHeaderTitle {
+      font-size: 20px;
+      text-shadow: 0px 1px 2px #374151;
+    }
+
+    .modalCloseBtn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 5px;
+      font-size: 20px;
+      border-radius: 5px;
+      border: 1px solid #78b043;
+      color: #78b043;
+      cursor: pointer;
+      background-color: transparent;
+
+      transition:
+        background-color 0.3s,
+        color 0.3s,
+        border-color 0.3s,
+        box-shadow 0.3s;
+
+      box-shadow:
+        0 3px 6px rgba(120, 176, 67, 0.2),
+        0 2px 4px rgba(120, 176, 67, 0.1);
+    }
+
+    .modalCloseBtnIcons {
+      color: inherit;
+      transition: color 0.3s;
+
+      & * {
+        color: inherit;
+      }
+    }
+
+    @media (hover: hover) {
+      .modalCloseBtn:hover {
+        background-color: #78b043;
+        border-color: #78b043;
+        color: #fff;
+      }
+    }
+  }
+
+  .modalContent {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .modalFooter {
+    display: flex;
+    justify-content: flex-end;
+    gap: 16px;
+    padding: 28px 32px;
+
+    .modalCancelBtn,
+    .modalConfirmBtn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 6px;
+      font-size: 18px;
+      border-radius: 5px;
+      border: 1px solid #78b043;
+      color: #78b043;
+      cursor: pointer;
+      background-color: #fff;
+      text-shadow: 0px 1px 2px #78b043;
+      transition:
+        background-color 0.3s,
+        color 0.3s,
+        border-color 0.3s;
+
+      box-shadow:
+        0 3px 6px rgba(120, 176, 67, 0.2),
+        0 2px 4px rgba(120, 176, 67, 0.1);
+    }
+
+    @media (hover: hover) {
+      .modalCancelBtn:hover,
+      .modalConfirmBtn:hover {
+        background-color: #78b043;
+        border-color: #78b043;
+        color: #fff;
+        text-shadow: 0px 1px 2px #fff;
+      }
+    }
+  }
 }

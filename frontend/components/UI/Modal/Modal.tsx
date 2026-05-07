@@ -3,6 +3,8 @@
 import { ReactNode, useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import css from "./Modal.module.css";
+import { IoCloseOutline } from "react-icons/io5";
+import Button from "../Button/Button";
 
 interface ModalProps {
   isOpen: boolean;
@@ -58,33 +60,31 @@ export default function Modal({
         aria-modal="true"
         aria-label={title}
       >
-        <div className={css.header}>
-          <h2 className={css.title}>{title}</h2>
-          <button className={css.closeBtn} onClick={onClose} type="button">
-            x
-          </button>
+        <div className={css.modalHeader}>
+          <h2 className={css.modalHeaderTitle}>{title}</h2>
+          <Button className={css.modalCloseBtn} onClick={onClose}>
+            <IoCloseOutline className={css.modalCloseBtnIcons} />
+          </Button>
         </div>
 
-        <div className={css.content}>{children}</div>
+        <div className={css.modalContent}>{children}</div>
 
-        <div className={css.footer}>
-          <button
-            className={css.cancelBtn}
+        <div className={css.modalFooter}>
+          <Button
+            className={css.modalCancelBtn}
             onClick={onClose}
             disabled={isLoading}
-            type="button"
           >
             {cancelText}
-          </button>
+          </Button>
           {onConfirm && (
-            <button
-              className={css.confirmBtn}
+            <Button
+              className={css.modalConfirmBtn}
               onClick={onConfirm}
               disabled={isLoading}
-              type="button"
             >
               {isLoading ? "Loading..." : confirmText}
-            </button>
+            </Button>
           )}
         </div>
       </div>

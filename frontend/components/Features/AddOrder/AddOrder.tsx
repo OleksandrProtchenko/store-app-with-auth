@@ -21,7 +21,6 @@ export default function AddOrderModal({ isOpen, onClose }: AddOrderModalProps) {
       {
         title,
         description,
-        date: new Date().toISOString(),
         products: [],
       },
       {

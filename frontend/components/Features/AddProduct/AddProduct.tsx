@@ -1,9 +1,10 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Modal from "../../UI/Modal/Modal";
 import { useAddProduct } from "@/lib/api/mutation/productsMutation";
 import { getDefaultGuarantee } from "@/utils/getDefaultGuarantee";
+import { getUsdToUahRate } from "@/lib/api/client/apiRates";
 
 interface AddProductModalProps {
   isOpen: boolean;
@@ -11,11 +12,16 @@ interface AddProductModalProps {
   orderId: string;
 }
 
+const FALLBACK_RATE = 41;
+
 export default function AddProductModal({
   isOpen,
   onClose,
   orderId,
 }: AddProductModalProps) {
+  const [usdRate, setUsdRate] = useState<number>(FALLBACK_RATE);
+  const [usdPrice, setUsdPrice] = useState(0);
+
   const [formData, setFormData] = useState({
     title: "",
     type: "",
@@ -23,32 +29,62 @@ export default function AddProductModal({
     serialNumber: 0,
     isNew: 1,
     photo: "",
-    price: [{ value: 0, symbol: "USD", isDefault: 1 }],
+    price: [
+      { value: 0, symbol: "USD", isDefault: 1 },
+      { value: 0, symbol: "UAH", isDefault: 0 },
+    ],
     guarantee: getDefaultGuarantee(),
   });
 
   const { mutate, isPending } = useAddProduct();
+
+  useEffect(() => {
+    if (!isOpen) return;
+    getUsdToUahRate().then(setUsdRate);
+  }, [isOpen]);
+
+  const handlePriceChange = (usd: number) => {
+    const uah = Math.round(usd * usdRate * 100) / 100;
+    setUsdPrice(usd);
+    setFormData((prev) => ({
+      ...prev,
+      price: [
+        { value: usd, symbol: "USD", isDefault: 1 },
+        { value: uah, symbol: "UAH", isDefault: 0 },
+      ],
+    }));
+  };
+
+  const resetForm = () => {
+    setUsdPrice(0);
+    setFormData({
+      title: "",
+      type: "",
+      specification: "",
+      serialNumber: 0,
+      isNew: 1,
+      photo: "",
+      price: [
+        { value: 0, symbol: "USD", isDefault: 1 },
+        { value: 0, symbol: "UAH", isDefault: 0 },
+      ],
+      guarantee: getDefaultGuarantee(),
+    });
+  };
 
   const handleConfirm = () => {
     mutate(
       { orderId, product: formData },
       {
         onSuccess: () => {
-          setFormData({
-            title: "",
-            type: "",
-            specification: "",
-            serialNumber: 0,
-            isNew: 1,
-            photo: "",
-            price: [{ value: 0, symbol: "USD", isDefault: 1 }],
-            guarantee: getDefaultGuarantee(),
-          });
+          resetForm();
           onClose();
         },
       },
     );
   };
+
+  const uahPrice = Math.round(usdPrice * usdRate * 100) / 100;
 
   return (
     <Modal
@@ -110,22 +146,23 @@ export default function AddProductModal({
           }}
         />
 
-        <input
-          type="number"
-          placeholder="Price"
-          value={formData.price[0].value}
-          onChange={(e) =>
-            setFormData({
-              ...formData,
-              price: [{ ...formData.price[0], value: Number(e.target.value) }],
-            })
-          }
-          style={{
-            padding: "8px",
-            border: "1px solid #ddd",
-            borderRadius: "4px",
-          }}
-        />
+        <div>
+          <input
+            type="number"
+            placeholder="Price (USD)"
+            value={usdPrice}
+            onChange={(e) => handlePriceChange(Number(e.target.value))}
+            style={{
+              padding: "8px",
+              border: "1px solid #ddd",
+              borderRadius: "4px",
+              width: "100%",
+            }}
+          />
+          <p style={{ margin: "4px 0 0", fontSize: "12px", color: "#888" }}>
+            ≈ {uahPrice.toLocaleString("uk-UA")} UAH (курс НБУ: {usdRate})
+          </p>
+        </div>
       </div>
     </Modal>
   );

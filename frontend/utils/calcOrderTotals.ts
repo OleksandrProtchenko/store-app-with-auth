@@ -12,3 +12,11 @@ export function getOrderTotalsByCurrency(order: Order) {
 
   return Array.from(totals.entries());
 }
+
+export function formatOrderTotals(order: Order): string {
+  const totals = getOrderTotalsByCurrency(order);
+  if (!totals.length) return "0";
+  return totals
+    .map(([symbol, value]) => `${value.toLocaleString("uk-UA")} ${symbol}`)
+    .join(" / ");
+}

@@ -18,6 +18,8 @@ import { queryKeys } from "@/types/queryKeys";
 import { getOrderTotalsByCurrency } from "@/utils/calcOrderTotals";
 import { formatDateDmy, formatDateMonthYear } from "@/utils/formatDate";
 
+import { MdOutlineEdit, MdDeleteForever, MdViewList } from "react-icons/md";
+
 export default function Orders() {
   const [isAddOrderOpen, setIsAddOrderOpen] = useState(false);
   const [editingOrder, setEditingOrder] = useState<Order | null>(null);
@@ -81,19 +83,19 @@ export default function Orders() {
 
   if (isError) {
     return (
-      <p className={css.stateText}>
+      <p className={css.stateTextError}>
         Failed to load orders: {(error as Error)?.message ?? "Unknown error"}
       </p>
     );
   }
 
   return (
-    <div className={css.wrapper}>
-      <div className={css.headerRow}>
-        <h2 className={css.title}>Orders</h2>
+    <div className={css.ordersWrapper}>
+      <div className={css.ordersHeader}>
+        <h2 className={css.headerTitle}>Orders</h2>
         <Button
           onClick={() => setIsAddOrderOpen(true)}
-          className={css.addButton}
+          className={css.addOrderButton}
         >
           + Add Order
         </Button>
@@ -102,57 +104,78 @@ export default function Orders() {
       {orders.length === 0 ? (
         <p className={css.stateText}>No orders yet</p>
       ) : (
-        <ul className={css.list}>
+        <ul className={css.ordersList}>
           {orders.map((order) => {
-            const productCount = order.products?.length ?? 0;
+            const { products, description, _id, title, createdAt } = order;
+            const productCount = products?.length ?? 0;
             const totals = getOrderTotalsByCurrency(order);
             return (
-              <li key={order._id} className={css.card}>
-                <div className={css.cardTop}>
-                  <h3 className={css.orderTitle}>{order.title}</h3>
-                  <span className={css.badge}>Products: {productCount}</span>
+              <li key={_id} className={css.ordersItem}>
+                <div className={css.orderItemHeader}>
+                  <h3
+                    className={css.orderItemTitle}
+                    onClick={() =>
+                      router.push(`/dashboard/groups?orderId=${_id}`)
+                    }
+                  >
+                    {title}
+                  </h3>
+                  <p className={css.orderItemProductsCount}>
+                    Products: {productCount}
+                  </p>
                 </div>
 
-                <p className={css.description}>{order.description}</p>
+                <div className={css.orderItemContent}>
+                  <p className={css.orderItemDescription} title={description}>
+                    {description}
+                  </p>
 
-                <p className={css.meta}>
-                  Created: {formatDateDmy(order.date)} /{" "}
-                  {formatDateMonthYear(order.date)}
-                </p>
+                  <div className={css.orderItemCreated}>
+                    <p className={css.orderItemCreatedShort}>
+                      {formatDateMonthYear(createdAt)}
+                    </p>
+                    <p className={css.orderItemCreatedFull}>
+                      {formatDateDmy(createdAt)}
+                    </p>
+                  </div>
 
-                <p className={css.meta}>
-                  Total:{" "}
-                  {totals.length
-                    ? totals
-                        .map(
-                          ([symbol, value]) =>
-                            `${value.toLocaleString("uk-UA")} ${symbol}`,
-                        )
-                        .join(" / ")
-                    : "-"}
-                </p>
+                  <p className={css.orderItemTotals}>
+                    {totals.length
+                      ? totals.map(([symbol, value], i) => (
+                          <span
+                            key={symbol}
+                            className={
+                              css[`orderItemTotal${symbol}` as keyof typeof css]
+                            }
+                          >
+                            {value.toLocaleString("uk-UA")} {symbol}
+                          </span>
+                        ))
+                      : "0"}
+                  </p>
 
-                <div className={css.actions}>
-                  <Button
-                    onClick={() =>
-                      router.push(`/dashboard/groups?orderId=${order._id}`)
-                    }
-                    className={css.viewButton}
-                  >
-                    View
-                  </Button>
-                  <Button
-                    onClick={() => openEdit(order)}
-                    className={css.editButton}
-                  >
-                    Edit
-                  </Button>
-                  <Button
-                    onClick={() => requestDeleteOrder(order)}
-                    className={css.deleteButton}
-                  >
-                    Delete
-                  </Button>
+                  <div className={css.orderItemActions}>
+                    <Button
+                      onClick={() =>
+                        router.push(`/dashboard/groups?orderId=${_id}`)
+                      }
+                      className={css.viewButton}
+                    >
+                      <MdViewList className={css.orderItemActionsIcons} />
+                    </Button>
+                    <Button
+                      onClick={() => openEdit(order)}
+                      className={css.editButton}
+                    >
+                      <MdOutlineEdit className={css.orderItemActionsIcons} />
+                    </Button>
+                    <Button
+                      onClick={() => requestDeleteOrder(order)}
+                      className={css.deleteButton}
+                    >
+                      <MdDeleteForever className={css.orderItemActionsIcons} />
+                    </Button>
+                  </div>
                 </div>
               </li>
             );
@@ -195,14 +218,15 @@ export default function Orders() {
           </label>
         </div>
       </Modal>
+
       <DeleteConfirmModal
         isOpen={Boolean(deletingOrder)}
         entityType="order"
         title={deletingOrder?.title ?? ""}
         subtitle={deletingOrder?.description ?? ""}
         meta={
-          deletingOrder?.date
-            ? new Date(deletingOrder.date).toLocaleString()
+          deletingOrder?.createdAt
+            ? new Date(deletingOrder.createdAt).toLocaleString()
             : undefined
         }
         isLoading={isDeleting}
