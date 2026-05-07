@@ -30,7 +30,6 @@ const productSchema = new mongoose.Schema(
       },
     },
     order: Number,
-    date: String,
   },
   { timestamps: true },
 );
@@ -38,7 +37,6 @@ const productSchema = new mongoose.Schema(
 const ordersSchema = new mongoose.Schema(
   {
     title: { type: String, required: true },
-    date: { type: String, required: true },
     description: { type: String, required: true },
     products: { type: [productSchema], default: [] },
     userId: {
