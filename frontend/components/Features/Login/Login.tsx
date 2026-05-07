@@ -1,6 +1,6 @@
 "use client";
 
-import { FormEvent, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import css from "./Login.module.css";
 import { useLogin } from "@/lib/api/mutation/authMutation";

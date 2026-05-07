@@ -1,6 +1,6 @@
 "use client";
 
-import { FormEvent, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import css from "./Register.module.css";
 import { useRegister } from "@/lib/api/mutation/authMutation";
@@ -33,7 +33,7 @@ export default function Register() {
     inputNameRef.current?.focus();
   }, []);
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (e: React.SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     const trimmedName = name.trim();
